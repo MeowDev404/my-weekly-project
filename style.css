@@ -29,57 +29,64 @@ h1, h2 {
   margin-top: 0;
 }
 
-.projectcard {
-  background-color: linear-gradient(90deg, #00ffcc, #0077ff);
-  text-align: center;
-  padding: 20px;
-  color: #0f0f0f
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
-.projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+.project {
+  border: 2px solid #00ff00;
+  padding: 20px;
+  text-align: center;
+  color: #00ff00;
+  text-decoration: none;
 }
+
+.project:hover {
+  background: #00ff00;
+  color: black;
+}
+
 .project-box {
-    border: 2px solid #00ff00;
-    padding: 25px;
-    max-width: 600px;
-    margin: auto;
+  border: 2px solid #00ff00;
+  padding: 25px;
+  max-width: 600px;
+  margin: auto;
 }
 
 .desc {
-    margin: 15px 0;
-    line-height: 1.5;
+  margin: 15px 0;
+  line-height: 1.5;
 }
 
 .features {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .features li {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
 .actions {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .btn {
-    display: inline-block;
-    padding: 10px 15px;
-    border: 1px solid #00ff00;
-    color: #00ff00;
-    text-decoration: none;
-    margin-right: 10px;
+  display: inline-block;
+  padding: 10px 15px;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  text-decoration: none;
+  margin-right: 10px;
 }
 
 .btn:hover {
-    background: #00ff00;
-    color: black;
+  background: #00ff00;
+  color: black;
 }
 
 .btn.secondary {
-    opacity: 0.7;
+  opacity: 0.7;
 }
