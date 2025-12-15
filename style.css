@@ -1,18 +1,30 @@
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  background: #111;
+  background: #0f0f0f;
   color: white;
+}
+
+header {
+  background: linear-gradient(90deg, #00ffcc, #0077ff);
+  padding: 30px;
+  text-align: center;
+  color: black;
+}
+
+main {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: #1a1a1a;
+  border-radius: 12px;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
-a {
-  color: #00ffcc;
-  text-decoration: none;
-}
-
-.project {
-  background: #1e1e1e;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 10px;
+h1, h2 {
+  margin-top: 0;
 }
