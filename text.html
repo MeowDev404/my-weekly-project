@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Typbar</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    #messages { border:1px solid #ccc; height:300px; overflow-y:auto; padding:5px; }
+    input { width:80%; padding:5px; }
+    button { padding:5px; }
+  </style>
+</head>
+<body>
+<h2>Live Typbar</h2>
+<div id="messages"></div>
+<input id="input" placeholder="Typ iets..." />
+<button onclick="sendMessage()">Verstuur</button>
+
+<!-- Firebase modules -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+  import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDqXTe9xXIKKSCTaFzyAjqB780yG5kHhi4",
+    authDomain: "livetypbar.firebaseapp.com",
+    databaseURL: "https://livetypbar-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "livetypbar",
+    storageBucket: "livetypbar.firebasestorage.app",
+    messagingSenderId: "757032322654",
+    appId: "1:757032322654:web:929e8503e6a39aceecd6cf",
+    measurementId: "G-0T8013GFTL"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getDatabase(app);
+
+  const messagesDiv = document.getElementById('messages');
+  const input = document.getElementById('input');
+
+  // Laat alle berichten zien
+  onChildAdded(ref(db, 'messages'), (snapshot) => {
+    const p = document.createElement('p');
+    p.textContent = snapshot.val();
+    messagesDiv.appendChild(p);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  });
+
+  // Verstuur bericht
+  window.sendMessage = function() {
+    const text = input.value.trim();
+    if(text) push(ref(db, 'messages'), text);
+    input.value = '';
+  };
+
+  // Enter werkt ook
+  input.addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
+
+</script>
+</body>
+</html>
