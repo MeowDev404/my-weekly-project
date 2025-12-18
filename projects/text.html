@@ -12,10 +12,10 @@
 <body>
 <h2>Live Typbar</h2>
 <div id="messages"></div>
-<input id="input" placeholder="Typ iets..." />
-<button onclick="sendMessage()">Verstuur</button>
+<input id="input" placeholder="Type something" />
+<button onclick="sendMessage()">Send global</button>
 
-<!-- Firebase modules -->
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
   import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
@@ -39,7 +39,7 @@
   const messagesDiv = document.getElementById('messages');
   const input = document.getElementById('input');
 
-  // Laat alle berichten zien
+ 
   onChildAdded(ref(db, 'messages'), (snapshot) => {
     const p = document.createElement('p');
     p.textContent = snapshot.val();
@@ -47,14 +47,14 @@
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
 
-  // Verstuur bericht
+  
   window.sendMessage = function() {
     const text = input.value.trim();
     if(text) push(ref(db, 'messages'), text);
     input.value = '';
   };
 
-  // Enter werkt ook
+  
   input.addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
 
 </script>
