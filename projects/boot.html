@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Boot Menu</title>
+<style>
+  body {
+    margin: 0;
+    background: black;
+    color: #00ff00;
+    font-family: monospace;
+    font-size: 16px;
+  }
+  .screen {
+    padding: 20px;
+  }
+  .selected {
+    background: #00ff00;
+    color: black;
+  }
+</style>
+</head>
+<body>
+
+<div class="screen" id="screen">
+  <div>Boot Menu v1.0</div>
+  <div>--------------------</div>
+  <br>
+  <div class="option selected">▶ Start Operating System</div>
+  <div class="option">  Safe Mode</div>
+  <div class="option">  Recovery</div>
+  <div class="option">  BIOS Settings</div>
+  <div class="option">  Shutdown</div>
+  <br>
+  <div>Use ↑ ↓ and Enter</div>
+</div>
+
+<script>
+const options = document.querySelectorAll(".option");
+let index = 0;
+
+function update() {
+  options.forEach(o => o.classList.remove("selected"));
+  options[index].classList.add("selected");
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown") {
+    index = (index + 1) % options.length;
+    update();
+  }
+  if (e.key === "ArrowUp") {
+    index = (index - 1 + options.length) % options.length;
+    update();
+  }
+  if (e.key === "Enter") {
+    boot();
+  }
+});
+
+function boot() {
+  document.body.innerHTML = `
+    <div class="screen">
+      Booting ${options[index].innerText}...
+      <br><br>
+      Loading kernel ██████▒▒▒▒▒▒ 60%
+    </div>
+  `;
+}
+</script>
+
+<footer>
+   <p> &copy;2025 by abel (discord: abelstolk) </p>
+</footer>
+</body>
+</html>
