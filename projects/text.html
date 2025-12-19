@@ -10,11 +10,11 @@
   </style>
 </head>
 <body>
+
 <h2>Live Typbar</h2>
 <div id="messages"></div>
 <input id="input" placeholder="Type something" />
 <button onclick="sendMessage()">Send global</button>
-
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
@@ -33,13 +33,45 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+  getAnalytics(app);
   const db = getDatabase(app);
 
   const messagesDiv = document.getElementById('messages');
   const input = document.getElementById('input');
 
- 
+  
+  const swearWords = [
+    "fuck","fucking","shit","bullshit","bitch","bastard",
+    "asshole","ass","dick","cock","pussy","slut","whore",
+    "motherfucker","mf","damn","crap","prick","jerk",
+    "retard","stfu","gtfo",
+
+    "kut","klootzak","lul","eikel","tering","tyfus",
+    "kanker","hoer","slet","neuk","neuken","fucken",
+    "godverdomme","verdomme","kloot","mongool",
+    "idioot","debiel","sukkel","klote","rotzak",
+
+    "kutzooi","kankerzooi","teringlijer","tyfuslijer",
+    "klotezooi","rot op"
+  ];
+
+  function containsSwearWord(text) {
+    const clean = text.toLowerCase().replace(/[^a-z0-9\s]/gi, "");
+    const words = clean.split(/\s+/);
+    return swearWords.some(sw => words.includes(sw));
+  }
+
+  function processMessage(text) {
+    if (
+      containsSwearWord(text) &&
+      !text.toLowerCase().startsWith("jens:")
+    ) {
+      return "jens: " + text;
+    }
+    return text;
+  }
+
+  
   onChildAdded(ref(db, 'messages'), (snapshot) => {
     const p = document.createElement('p');
     p.textContent = snapshot.val();
@@ -49,14 +81,19 @@
 
   
   window.sendMessage = function() {
-    const text = input.value.trim();
-    if(text) push(ref(db, 'messages'), text);
+    let text = input.value.trim();
+    if (!text) return;
+
+    text = processMessage(text);
+    push(ref(db, 'messages'), text);
+
     input.value = '';
   };
 
-  
-  input.addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
-
+  input.addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendMessage();
+  });
 </script>
+
 </body>
 </html>
